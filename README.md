@@ -1,3 +1,33 @@
-# EMG-UI-Bionix
+# EMG-UI-Data-Collections
+An application to save EMG data into EDF format.
 
-Repository for the EMG UI By Kishan & Daniel
+## Built with
+* [![Python][Python.org]][Python-url]
+
+[Python.org]: https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white
+[Python-url]: https://www.python.org/
+
+## Steps
+
+
+## Python Packages
+   ### [MNE](https://mne.tools/stable/index.html)
+   ```py
+   pip install mne
+   ```
+   > A powerful library for processing, analyzing, and visualizing EEG data. Used to filter raw brain signals, extract relevant epochs, and prepare data for machine learning classification.
+   ### [PyQt5](https://www.pythonguis.com/pyqt5-tutorial/)
+   ```py
+   pip install PyQt5
+   ```
+   > A library used for GUI development.
+   ### [PyQtgraph](https://www.pyqtgraph.org/)
+   ```py
+   pip install PyQtgraph
+   ```
+   > A library used for plotting the graphs in the GUI.
+   ### [pyEDFlib](https://pypi.org/project/pyEDFlib/)
+   ```py
+   pip install pyEDFlib
+   ```
+   > A library used for coverting the obtained data into a readable .edf file.

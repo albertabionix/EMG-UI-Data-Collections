@@ -14,10 +14,12 @@ from PyQt5.QtGui import QFont
 # Configurations
 #
 EDF_file = "EMG_data_edf.edf"
-serial_port = "COM3"  # Change as per your system
+serial_port = "COM5"  # Change as per your system
 baud_rate = 96000 # Number of signal events per second
 sampling_rate = 1000  # Number of samples per second
 activation_threshold = 0.1  # Decides when a muscle is considered active
+
+version = "v1.0"
 
 #
 # Class object of the main window
@@ -37,8 +39,11 @@ class EMGMonitor(QtWidgets.QMainWindow):
         self.start_time = time.time()
 
         # Serial setup
-        self.serial = serial.Serial(serial_port, baud_rate)
-        self.serial.timeout = 0.01 # If no data is received in 10ms, move on
+        self.serial = serial.Serial(
+            port = serial_port,
+            baudrate = baud_rate,
+            timeout = 0.01,
+        )
 
         # EDF setup
         self.edf_filename = "emg_data.edf"
@@ -64,6 +69,8 @@ class EMGMonitor(QtWidgets.QMainWindow):
         self.title.setAlignment(QtCore.Qt.AlignBottom)
         self.creators = QtWidgets.QLabel("for Alberta Bionix", font = QFont('Arial', 12))
         self.creators.setAlignment(QtCore.Qt.AlignBottom | QtCore.Qt.AlignLeft)
+        self.version = QtWidgets.QLabel(" " + version, font = QFont('Arial', 12))
+        self.version.setAlignment(QtCore.Qt.AlignBottom | QtCore.Qt.AlignLeft)
 
         # Plot electrode 1
         self.plot_widget_e1 = pg.PlotWidget()
@@ -133,6 +140,7 @@ class EMGMonitor(QtWidgets.QMainWindow):
         title_layout = QtWidgets.QHBoxLayout()
         title_layout.addWidget(self.title)
         title_layout.addWidget(self.creators)
+        title_layout.addWidget(self.version)
         title_layout.addWidget(self.timer_label) 
         
         main_layout = QtWidgets.QVBoxLayout()
@@ -143,7 +151,7 @@ class EMGMonitor(QtWidgets.QMainWindow):
         main_layout.addWidget(self.stop_button)
         main_layout.addLayout(serial_layout)
         main_layout.addLayout(baud_layout)
-        main_layout.addLayout(sampling_layout)
+        #main_layout.addLayout(sampling_layout)
         main_layout.addWidget(self.save_button)
 
         container = QtWidgets.QWidget()
@@ -178,8 +186,13 @@ class EMGMonitor(QtWidgets.QMainWindow):
         self.timer_label.setText(f"{minutes:02d}:{seconds:02d}")
 
         try:
-            line = self.serial.readline().decode('utf-8').strip()
-            emg_value = float(line)
+            line = self.serial.readline().decode(errors='ignore').strip()
+            if not line:
+                return
+            try:
+                emg_value = float(line)
+            except ValueError:
+                return
         except:
             return
 
@@ -200,8 +213,10 @@ class EMGMonitor(QtWidgets.QMainWindow):
             self.edf_buffer = []
 
         # Plot update
-        self.raw_curve.setData(self.time_stamps, self.raw_data)
-        self.filtered_curve.setData(self.time_stamps, self.filtered_data)
+        self.raw_curve_e1.setData(self.time_stamps, self.raw_data)
+        self.filtered_curve_e1.setData(self.time_stamps, self.filtered_data)
+        self.raw_curve_e2.setData(self.time_stamps, self.raw_data)
+        self.filtered_curve_e2.setData(self.time_stamps, self.filtered_data)      
     
     def design_elements(self):
         self.plot_widget_e1.setBackground('black')

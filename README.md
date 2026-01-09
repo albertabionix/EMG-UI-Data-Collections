@@ -41,7 +41,9 @@ void loop() {
 }
 ```
 2. Check which port (Ex. COM1) the arduino is connected too and make sure that is the same in the program code. If not change it within the code.
-3. 
+3. Input the ID.
+4. Press start.
+5. Wait 
 
 
 ## Python Packages

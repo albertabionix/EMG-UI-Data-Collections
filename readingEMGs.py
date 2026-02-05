@@ -185,7 +185,7 @@ class EMGMonitor(QtWidgets.QMainWindow):
         self.init_csv()
 
         self.serial_thread = SerialThread(SERIAL_PORT, BAUD_RATE)
-        self.serial_thread.data_received.connect(self.on_data)
+        self.serial_thread.data_received.connect(self.on_data(self.data_ch1, self.data_ch2))
         self.serial_thread.start()
 
         self.timer.start(30)

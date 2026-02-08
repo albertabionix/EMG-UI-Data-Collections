@@ -69,7 +69,7 @@ void loop() {
    pip install pyEDFlib
    ```
    > A library used for coverting the obtained data into a readable .edf file.
-   ### [datetime](https://pypi.org/project/pyEDFlib/](https://docs.python.org/3/library/datetime.html)
+   ### [datetime](https://docs.python.org/3/library/datetime.html)
    ```py
    pip install datetime
    ```

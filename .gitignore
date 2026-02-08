@@ -1,0 +1,5 @@
+recordings/
+venv/
+build/
+dist/
+readingEMGs.spec

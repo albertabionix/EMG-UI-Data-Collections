@@ -43,10 +43,9 @@ void loop() {
 
 ```
 2. Check which port (Ex. COM1) the arduino is connected too and make sure that is the same in the program code. If not change it within the code.
-3. Input the ID.
-4. Press start.
-5. Wait 
-
+3. Input the ID based on the format participantID_action_YYMMDD
+4. Press start and stop when desired time is reached.
+5. Click view EDF to check if it is a good or bad signal. 
 
 ## Python Packages
    ### [MNE](https://mne.tools/stable/index.html)

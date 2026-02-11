@@ -1,5 +1,5 @@
 # EMG-UI-Data-Collections
-An application to save EMG data into EDF format.
+Using this program we will be collecting EMG data from able-bodied people and storing said data in a secure location.
 
 ## Built with
 * [![Python][Python.org]][Python-url]
@@ -8,44 +8,15 @@ An application to save EMG data into EDF format.
 [Python-url]: https://www.python.org/
 
 ## Steps
-1. Open arduino IDE and run
-```
-// Reads raw EMG signals from two Gravity Analog EMG modules
-// Sends data to Python over Serial in format: ch1,ch2\n
-
-#define EMG_PIN_1 A0
-#define EMG_PIN_2 A1
-
-const int SAMPLE_RATE = 1000;         
-unsigned long nextSampleTime = 0;
-
-void setup() {
-  Serial.begin(115200);
-  delay(2000);                        
-  nextSampleTime = micros();
-}
-
-void loop() {
-  unsigned long now = micros();
-
-  if (now >= nextSampleTime) {
-    int emg1 = analogRead(EMG_PIN_1); 
-    int emg2 = analogRead(EMG_PIN_2); 
-
-    
-    Serial.print(emg1);
-    Serial.print(",");
-    Serial.println(emg2);
-
-    nextSampleTime += 1000000 / SAMPLE_RATE;
-  }
-}
-
-```
-2. Check which port (Ex. COM1) the arduino is connected too and make sure that is the same in the program code. If not change it within the code.
-3. Input the ID based on the format participantID_action_YYMMDD
-4. Press start and stop when desired time is reached.
-5. Click view EDF to check if it is a good or bad signal. 
+1. Change the SERIAL_PORT to the appropriate port that the Arduino is connected to on your laptop device (COMX for Windows devices or usbmodem for MacOS devices)
+2. Run the Python file in the terminal using python “.\src\readingEMGs.py” in the extracted directory.
+   ```
+   python .\src\readingEMGs.py
+   ```
+3. Enter the assigned participant ID number into the “ID” input box with the format participantID_action.
+4. When the test is ready to begin and the participant is in the proper position, press the “Start” button and you should be able to see the EMG wavelengths being read in real time.
+5. When the participant has completed their tests then press the “Stop” button. Wait a couple of seconds to let the program automatically filter the EMG data.
+6. Click “View CSV” to view the collected data.
 
 ## Python Packages
    ### [MNE](https://mne.tools/stable/index.html)
